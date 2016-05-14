@@ -6,54 +6,48 @@
 
 #define MAXLEN 1000
 
-int getln(char line[], int maxlen);
+int getstr(char s[], int maxlen);
 void reverse(char s[]);
 
 main()
 {
     char line[MAXLEN];
 
-    while (getln(line, MAXLEN) > 0) {
+    while (getstr(line, MAXLEN) > 0) {
         reverse(line);
-        printf("%s", line);
+        printf("%s\n", line);
     }
 
     return 0;
 }
 
+int length(char s[])
+{
+    int i;
+
+    for (i = 0; s[i] != '\0'; ++i)
+        ;
+    return i;
+}
+
 void reverse(char s[])
 {
-    int i, j;
-    char tmp;
+    int i, j, tmp;
 
-    i = 0;
-    j = 0;
-    while (s[j] != '\0' && s[j] != '\n')
-        ++j;
-
-    /* if not the empty string, point j to the character before \0 or \n */
-    if (j > 0)
-       --j;
-
-    while (i < j) {
+    for (i = 0, j = length(s) - 1; i < j; ++i, --j) {
         tmp = s[i];
         s[i] = s[j];
         s[j] = tmp;
-        ++i;
-        --j;
     }
 }
 
-int getln(char line[], int maxlen)
+/* getstr: return a line of input without trailing '\n' */
+int getstr(char s[], int maxlen)
 {
     int c, i;
 
-    for (i = 0; i < maxlen - 1 && (c = getchar()) != EOF && c != '\n'; ++i)
-        line[i] = c;
-
-    if (c == '\n')
-        line[i++] = c;
-
-    line[i] = '\0';
+    for (i = 0; i < maxlen && (c = getchar()) != EOF && c != '\n'; ++i)
+        s[i] = c;
+    s[i] = '\0';
     return i;
 }
