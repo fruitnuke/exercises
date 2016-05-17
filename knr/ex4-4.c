@@ -1,8 +1,8 @@
 /* Exercise 4-4. Add commands to print the top element of the stack
  * without popping, to duplicate it, and to swap the top two elements.
- * Add a command to clear the stack. */
-
-/* Notes: It may seem more natural to add keywords for the commands,
+ * Add a command to clear the stack.
+ *
+ * Notes: It may seem more natural to add keywords for the commands,
  * like "top", "dup" and "swap", that involves a bunch of extra
  * processing to parse those keywords. Much easier to add some more
  * single character operators, such as '@', '"' and '$', as the
@@ -18,6 +18,9 @@
 
 #define MAXOP 100
 #define NUMBER '0'
+#define CLEAR '#'
+#define DUP '\"'
+#define SWAP '$'
 
 int getop(char s[]);
 int getch(void);
@@ -61,16 +64,16 @@ main()
             op2 = pop();
             push((int)pop() % (int)op2);
             break;
-        case '\"':              /* duplicate the top element of the stack */
+        case DUP:
             push(peek());
             break;
-        case '$':               /* swap the top two elements of the stack */
+        case SWAP:
             op1 = pop();
             op2 = pop();
             push(op1);
             push(op2);
             break;
-        case '#':               /* clear the stack */
+        case CLEAR:
             clear();
             break;
         case '\n':
